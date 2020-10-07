@@ -28,3 +28,42 @@ $ docker run -e S3_ACCESS_KEY_ID=key -e S3_SECRET_ACCESS_KEY=secret -e S3_BUCKET
 You can additionally set the `SCHEDULE` environment variable like `-e SCHEDULE="@daily"` to run the backup automatically.
 
 More information about the scheduling can be found [here](http://godoc.org/github.com/robfig/cron#hdr-Predefined_schedules).
+
+## Example config for kubernetes
+
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backup-mongo-s3
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backup-mongo-s3
+  template:
+    metadata:
+      labels:
+        app: backup-mongo-s3
+    spec:
+      containers:
+      - name: backup-mongo-s3
+        image: docker.pkg.github.com/ticketteer/mongo-backup-s3/mongo-backup-s3:latest
+        #command: [ "/bin/bash", "-c", "--" ]
+        #args: [ "while true; do sleep 30; done;" ]
+        env:
+        - name: MONGO_URI
+          value: mongodb://<USER>:<PASS>@<DB0>,<DB1>,<DB2>/<DBNAME>?replicaSet=<RS0>&authSource=admin
+        - name: S3_ENDPOINT
+          value: https://fra1.digitaloceanspaces.com
+        - name: S3_ACCESS_KEY_ID
+          value: <YOUR_KEY>
+        - name: S3_SECRET_ACCESS_KEY
+          value: <YOUR_SECRET>
+        - name: S3_REGION
+          value: fra1
+        - name: S3_BUCKET
+          value: hzlk8-space
+      imagePullSecrets:
+        - name: regcred-gh
+```

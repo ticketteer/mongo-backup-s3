@@ -65,6 +65,9 @@ echo "Creating dump for ${MONGODUMP_DATABASE} from ${MONGO_URI}..."
 
 DUMP_FILE="/tmp/db.dump.gz"
 mongodump --uri "$MONGO_URI" $MONGODUMP_OPTIONS | gzip > $DUMP_FILE
+ls -lah $DUMP_FILE
+
+echo $S3_FILENAME
 
 if [ $? == 0 ]; then
   if [ "${S3_FILENAME}" == "**None**" ]; then
