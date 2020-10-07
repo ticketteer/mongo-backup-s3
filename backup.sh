@@ -1,4 +1,8 @@
 #!/bin/bash
+
+# this needs to stay in here. otherwise six will report it's not installed
+pip install six
+
 if [ "${S3_ACCESS_KEY_ID}" == "**None**" ]; then
   echo "Warning: You did not set the S3_ACCESS_KEY_ID environment variable."
 fi

@@ -5,8 +5,8 @@ RUN apk update \
  && apk add bash mongodb-tools python3 py3-pip curl \
  && pip install awscli \
  && pip uninstall six \
- && pip install six \
- && apk del py3-pip
+ && pip install six
+#  && apk del py3-pip
 
 run curl -L --insecure https://github.com/odise/go-cron/releases/download/v0.0.6/go-cron-linux.gz | zcat > /usr/local/bin/go-cron \
  && chmod u+x /usr/local/bin/go-cron \
