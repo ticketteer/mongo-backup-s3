@@ -71,9 +71,9 @@ echo $S3_FILENAME
 
 if [ $? == 0 ]; then
   if [ "${S3_FILENAME}" == "**None**" ]; then
-    S3_FILE="${DUMP_START_TIME}.dump.sql.gz"
+    S3_FILE="${DUMP_START_TIME}.dump.gz"
   else
-    S3_FILE="${S3_FILENAME}.sql.gz"
+    S3_FILE="${S3_FILENAME}.gz"
   fi
   copy_s3 $DUMP_FILE $S3_FILE
 else

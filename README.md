@@ -64,6 +64,8 @@ spec:
           value: fra1
         - name: S3_BUCKET
           value: hzlk8-space
-      imagePullSecrets:
-        - name: regcred-gh
+        - name: SCHEDULE
+          value: "@daily"
+      #imagePullSecrets:
+      #  - name: regcred-gh
 ```
