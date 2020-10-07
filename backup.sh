@@ -68,7 +68,7 @@ if [ $? == 0 ]; then
   else
     S3_FILE="${S3_FILENAME}.sql.gz"
   fi
-  # copy_s3 $DUMP_FILE $S3_FILE
+  copy_s3 $DUMP_FILE $S3_FILE
 else
   >&2 echo "Error creating dump"
 fi
