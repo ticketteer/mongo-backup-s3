@@ -64,7 +64,7 @@ copy_s3 () {
 echo "Creating dump for ${MONGODUMP_DATABASE} from ${MONGO_URI}..."
 
 DUMP_FILE="/tmp/db.dump.gz"
-mongodump --uri $MONGO_URI | gzip > $DUMP_FILE
+mongodump --uri $MONGO_URI $MONGODUMP_OPTIONS | gzip > $DUMP_FILE
 
 if [ $? == 0 ]; then
   if [ "${S3_FILENAME}" == "**None**" ]; then
