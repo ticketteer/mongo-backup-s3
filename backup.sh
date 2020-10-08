@@ -39,6 +39,8 @@ if [ "${S3_IAMROLE}" != "true" ]; then
 fi
 
 DUMP_START_TIME=$(date +"%Y-%m-%dT%H%M%SZ")
+HOUR=$(date +"%H")
+DAY=$(date +"%d")
 
 copy_s3 () {
   SRC_FILE=$1
@@ -52,7 +54,7 @@ copy_s3 () {
 
   echo "Uploading ${DEST_FILE} on S3..."
 
-  cat $SRC_FILE | aws $AWS_ARGS s3 cp - s3://$S3_BUCKET/$S3_PREFIX/`date +%H`/db.dump
+  cat $SRC_FILE | aws $AWS_ARGS s3 cp - s3://$S3_BUCKET/$S3_PREFIX/$DEST_FILE
 
   if [ $? != 0 ]; then
     >&2 echo "Error uploading ${DEST_FILE} on S3"
@@ -67,11 +69,12 @@ DUMP_FILE="/tmp/db.dump.gz"
 mongodump --uri "$MONGO_URI" $MONGODUMP_OPTIONS | gzip > $DUMP_FILE
 ls -lah $DUMP_FILE
 
-echo $S3_FILENAME
-
 if [ $? == 0 ]; then
   if [ "${S3_FILENAME}" == "**None**" ]; then
-    S3_FILE="${DUMP_START_TIME}.dump.gz"
+    S3_FILE="hourly/${HOUR}/db.dump.gz"
+    if [ "${HOUR}" == "00" ]; then
+      S3_FILE="daily/${DAY}/db.dump.gz"
+    fi
   else
     S3_FILE="${S3_FILENAME}.gz"
   fi
