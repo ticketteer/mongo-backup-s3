@@ -3,6 +3,11 @@
 Backup MongoDB to S3 (supports periodic backups)
 
 This work is derived from https://github.com/schickling/mysql-backup-s3
+
+This repo might be a fork to a different repo, which we can't give credit to
+any more as the original forker did not do it. If you recognize this repo as
+related to yours, please let us know, and we will add credits and links here.
+
 ## Basic usage
 
 ```sh
@@ -12,12 +17,12 @@ $ docker run -e S3_ACCESS_KEY_ID=key -e S3_SECRET_ACCESS_KEY=secret -e S3_BUCKET
 ## Environment variables
 
 - `MONGODUMP_OPTIONS` mysqldump options (default: --archive)
-- `MONGO_URI` the mongo database connection uri *required*
-- `S3_ACCESS_KEY_ID` your AWS access key *required*
-- `S3_SECRET_ACCESS_KEY` your AWS secret key *required*
-- `S3_BUCKET` your AWS S3 bucket path *required*
+- `MONGO_URI` the mongo database connection uri _required_
+- `S3_ACCESS_KEY_ID` your AWS access key _required_
+- `S3_SECRET_ACCESS_KEY` your AWS secret key _required_
+- `S3_BUCKET` your AWS S3 bucket path _required_
 - `S3_PREFIX` path prefix in your bucket (default: 'backup')
-- `S3_FILENAME` a consistent filename to overwrite with your backup.  If not set will use a timestamp.
+- `S3_FILENAME` a consistent filename to overwrite with your backup. If not set will use a timestamp.
 - `S3_REGION` the AWS S3 bucket region (default: us-west-1)
 - `S3_ENDPOINT` the AWS Endpoint URL, for S3 Compliant APIs such as [minio](https://minio.io) (default: none)
 - `S3_S3V4` set to `yes` to enable AWS Signature Version 4, required for [minio](https://minio.io) servers (default: no)
@@ -69,3 +74,4 @@ spec:
       #imagePullSecrets:
       #  - name: regcred-gh
 ```
+
